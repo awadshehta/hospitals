@@ -1,0 +1,4 @@
+Used:
+1- mcamara for translation
+2- astrotomiv laravel-translatable
+3- laravel breeze
