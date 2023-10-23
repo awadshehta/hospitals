@@ -13,7 +13,7 @@ class AdminController extends Controller
 
     public function index()
     {
-        
+
     }
 
 
@@ -26,11 +26,14 @@ class AdminController extends Controller
     public function store(AdminLoginRequest $request)
     {
         $request->authenticate();
+            $request->session()->regenerate();
+            return redirect()->intended(RouteServiceProvider::ADMIN);
 
-        $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::ADMIN);
     }
+
+
+
 
 
     public function show(string $id)
