@@ -14,10 +14,23 @@ use App\Http\Controllers\dashboard\DashboardController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get("/dashboard_admin", [DashboardController::class, 'index']);
+Route::group(
+    [
+        'prefix' => LaravelLocalization::setLocale(),
+        'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
+    ],
+    function()
+    {
 
-Route::get('/dashboard/user', function () {
-    return view('dashboard.user.dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard.user');
+    //Route::get("/dashboard_admin", [DashboardController::class, 'index']);
 
-require __DIR__.'/auth.php';
+    Route::get('/dashboard/user', function () {
+        return view('dashboard.user.dashboard');
+    })->middleware(['auth', 'verified'])->name('dashboard.user');
+
+    Route::get('/dashboard/admin', function () {
+        return view('dashboard.admin.dashboard');
+    })->middleware(['auth:admin', 'verified'])->name('dashboard.admin');
+    require __DIR__.'/auth.php';
+
+});

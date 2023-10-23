@@ -1,6 +1,11 @@
 @extends('dashboard.layouts.master2')
 @section('css')
 <!-- Sidemenu-respoansive-tabs css -->
+<style>
+	.login-form{
+		display:none;
+	}
+</style>
 <link href="{{URL::asset('dashboard/plugins/sidemenu-responsive-tabs/css/sidemenu-responsive-tabs.css')}}" rel="stylesheet">
 @endsection
 @section('content')
@@ -26,28 +31,70 @@
 										<div class="card-sigin">
 											<div class="main-signup-header">
 												<h2>Welcome back!</h2>
-												<h5 class="font-weight-semibold mb-4">الدخول كمستخدم </h5>
-												<form method="POST" action="{{ route('user.login') }}">
-        											@csrf
-													<div class="form-group">
-														<label>Email</label> <input class="form-control" placeholder="Enter your email" type="email" name="email" :value="old('email')" required autofocus>
-													</div>
-													<div class="form-group">
-														<label>Password</label> <input class="form-control" placeholder="Enter your password" type="password"name="password"required autocomplete="current-password" >
-													</div><button type="submit" class="btn btn-main-primary btn-block">Sign In</button>
-													<div class="row row-xs">
-														<div class="col-sm-6">
-															<button class="btn btn-block"><i class="fab fa-facebook-f"></i> Signup with Facebook</button>
-														</div>
-														<div class="col-sm-6 mg-t-10 mg-sm-t-0">
-															<button class="btn btn-info btn-block"><i class="fab fa-twitter"></i> Signup with Twitter</button>
-														</div>
-													</div>
-												</form>
-												<div class="main-signin-footer mt-5">
-													<p><a href="">Forgot password?</a></p>
-													<p>Don't have an account? <a href="{{ url('/' . $page='signup') }}">Create an Account</a></p>
+												<div class="form-group">
+													<label for="exampleFormControlSelect1">حدد طريقة الدخول</label>
+													<select name="" id="exampleFormControlSelect1" class="form-control">
+														<option value="" selected disabled> اختار من القائمه</option>
+														<option value="user">الدخول كمريض</option>
+														<option value="admin">الدخول ادمن</option>
+													</select>
 												</div>
+
+												<!-- user form -->
+
+												<div class="login-form" id="user">
+													<h5 class="font-weight-semibold mb-4">الدخول كمستخدم </h5>
+													<form method="POST" action="{{ route('user.login') }}">
+														@csrf
+														<div class="form-group">
+															<label>Email</label> <input class="form-control" placeholder="Enter your email" type="email" name="email" :value="old('email')" required autofocus>
+														</div>
+														<div class="form-group">
+															<label>Password</label> <input class="form-control" placeholder="Enter your password" type="password"name="password"required autocomplete="current-password" >
+														</div><button type="submit" class="btn btn-main-primary btn-block">Sign In</button>
+														<div class="row row-xs">
+															<div class="col-sm-6">
+																<button class="btn btn-block"><i class="fab fa-facebook-f"></i> Signup with Facebook</button>
+															</div>
+															<div class="col-sm-6 mg-t-10 mg-sm-t-0">
+																<button class="btn btn-info btn-block"><i class="fab fa-twitter"></i> Signup with Twitter</button>
+															</div>
+														</div>
+													</form>
+													<div class="main-signin-footer mt-5">
+														<p><a href="">Forgot password?</a></p>
+														<p>Don't have an account? <a href="{{ url('/' . $page='signup') }}">Create an Account</a></p>
+													</div>
+												</div>
+
+
+												<!-- form admin -->
+
+												<div class="login-form" id="admin">
+													<h5 class="font-weight-semibold mb-4">الدخول ادمن </h5>
+													<form method="POST" action="{{ route('admin.login') }}">
+														@csrf
+														<div class="form-group">
+															<label>Email</label> <input class="form-control" placeholder="Enter your email" type="email" name="email" :value="old('email')" required autofocus>
+														</div>
+														<div class="form-group">
+															<label>Password</label> <input class="form-control" placeholder="Enter your password" type="password"name="password"required autocomplete="current-password" >
+														</div><button type="submit" class="btn btn-main-primary btn-block">Sign In</button>
+														<div class="row row-xs">
+															<div class="col-sm-6">
+																<button class="btn btn-block"><i class="fab fa-facebook-f"></i> Signup with Facebook</button>
+															</div>
+															<div class="col-sm-6 mg-t-10 mg-sm-t-0">
+																<button class="btn btn-info btn-block"><i class="fab fa-twitter"></i> Signup with Twitter</button>
+															</div>
+														</div>
+													</form>
+													<div class="main-signin-footer mt-5">
+														<p><a href="">Forgot password?</a></p>
+														<p>Don't have an account? <a href="{{ url('/' . $page='signup') }}">Create an Account</a></p>
+													</div>
+												</div>
+
 											</div>
 										</div>
 									</div>
@@ -60,4 +107,12 @@
 		</div>
 @endsection
 @section('js')
+<script>
+	$('#exampleFormControlSelect1').change(function () {
+		var myID = $(this).val();
+		$('.login-form').each(function () {
+			myID === $(this).attr('id') ? $(this).show() : $(this).hide();
+		});
+	});
+</script>
 @endsection
